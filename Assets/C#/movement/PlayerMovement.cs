@@ -51,7 +51,7 @@ public class PlayerMovement : MonoBehaviour
         Vector2 temp = transform.localScale;
         if (!context.canceled) temp.x = Mathf.Clamp(moveDir.x, -1f, 1f); 
         transform.localScale = temp;
-        anim.Move(moveDir.x);
+        anim.Move(!context.canceled);
     }
     
     public void Jump(InputAction.CallbackContext context)
