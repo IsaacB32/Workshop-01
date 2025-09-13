@@ -14,12 +14,13 @@ public class EnemyMovement : MonoBehaviour
    private Vector2 startPosition;
    private float moveDirection = -1;
 
+   private new EnemyAnimation animation;
 
    private bool canMove = true;
 
    private int health = 3;
 
-   private void OnDrawGizmos()
+   private void OnDrawGizmosSelected()
    {
       Gizmos.color = Color.red;
       Gizmos.DrawLine(transform.position, transform.position + (Vector3.left * distanceLeft));
@@ -31,6 +32,8 @@ public class EnemyMovement : MonoBehaviour
       leftBound = transform.position + (Vector3.left * distanceLeft);
       rightBound = transform.position + (Vector3.right * distanceRight);
       startPosition = transform.position;
+
+      animation = GetComponent<EnemyAnimation>();
    }
 
    private void Update()
@@ -45,6 +48,7 @@ public class EnemyMovement : MonoBehaviour
       transform.position = move;
 
       if (transform.position.x < leftBound.x || transform.position.x > rightBound.x) moveDirection *= -1;
+      animation.Move(moveDirection);
    }
 
    private void OnTriggerEnter2D(Collider2D other)
@@ -62,6 +66,7 @@ public class EnemyMovement : MonoBehaviour
 
    IEnumerator HurtDelay()
    {
+      animation.Hurt();
       canMove = false;
       yield return new WaitForSeconds(1f);
       canMove = true;
@@ -69,6 +74,6 @@ public class EnemyMovement : MonoBehaviour
 
    void Death()
    {
-      
+      animation.Death();
    }
 }

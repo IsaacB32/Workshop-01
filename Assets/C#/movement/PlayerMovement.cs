@@ -9,6 +9,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float jumpHeight = 5f;
     private Vector2 moveDir;
     private Rigidbody2D myRB;
+    private new PlayerAnimation animation;
 
     private bool onGround;
     private bool jump = false;
@@ -21,9 +22,11 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private BoxCollider2D sword;
     
+    
     private void Start()
     {
         myRB = GetComponent<Rigidbody2D>();
+        animation.GetComponent<PlayerAnimation>();
     }
 
     private void Update()
@@ -48,11 +51,16 @@ public class PlayerMovement : MonoBehaviour
         Vector2 temp = transform.localScale;
         if (!context.canceled) temp.x = Mathf.Clamp(moveDir.x, -1f, 1f); 
         transform.localScale = temp;
+        animation.Move(moveDir.x);
     }
     
     public void Jump(InputAction.CallbackContext context)
     {
-        if (onGround && context.started) jump = true;
+        if (onGround && context.started)
+        {
+            jump = true;
+            animation.Jump(onGround);
+        }
     }
 
     public void Attack(InputAction.CallbackContext context)
@@ -62,6 +70,7 @@ public class PlayerMovement : MonoBehaviour
 
     private IEnumerator AttackDelay()
     {
+        animation.Attack();
         sword.enabled = true;
         yield return new WaitForSeconds(0.15f);
         sword.enabled = false;
