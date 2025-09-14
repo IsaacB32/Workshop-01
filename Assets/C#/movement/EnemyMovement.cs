@@ -18,7 +18,7 @@ public class EnemyMovement : MonoBehaviour
 
    private bool canMove = true;
 
-   private int health = 3;
+   private int health = 5;
 
    private void OnDrawGizmosSelected()
    {
@@ -48,7 +48,9 @@ public class EnemyMovement : MonoBehaviour
       transform.position = move;
 
       if (transform.position.x < leftBound.x || transform.position.x > rightBound.x) moveDirection *= -1;
-      animation.Move(moveDirection);
+      Vector2 temp = transform.localScale;
+      temp.x = -moveDirection;
+      transform.localScale = temp;
    }
 
    private void OnTriggerEnter2D(Collider2D other)
@@ -68,12 +70,13 @@ public class EnemyMovement : MonoBehaviour
    {
       animation.Hurt();
       canMove = false;
-      yield return new WaitForSeconds(1f);
+      yield return new WaitForSeconds(0.5f);
       canMove = true;
    }
 
    void Death()
    {
+      canMove = false;
       animation.Death();
    }
 }

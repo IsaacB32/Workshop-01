@@ -9,7 +9,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float jumpHeight = 5f;
     private Vector2 moveDir;
     private Rigidbody2D myRB;
-    private new PlayerAnimation animation;
+    private PlayerAnimation anim;
 
     private bool onGround;
     private bool jump = false;
@@ -26,7 +26,7 @@ public class PlayerMovement : MonoBehaviour
     private void Start()
     {
         myRB = GetComponent<Rigidbody2D>();
-        animation.GetComponent<PlayerAnimation>();
+        anim = GetComponent<PlayerAnimation>();
     }
 
     private void Update()
@@ -51,7 +51,7 @@ public class PlayerMovement : MonoBehaviour
         Vector2 temp = transform.localScale;
         if (!context.canceled) temp.x = Mathf.Clamp(moveDir.x, -1f, 1f); 
         transform.localScale = temp;
-        animation.Move(moveDir.x);
+        anim.Move(!context.canceled);
     }
     
     public void Jump(InputAction.CallbackContext context)
@@ -59,7 +59,6 @@ public class PlayerMovement : MonoBehaviour
         if (onGround && context.started)
         {
             jump = true;
-            animation.Jump(onGround);
         }
     }
 
@@ -70,7 +69,7 @@ public class PlayerMovement : MonoBehaviour
 
     private IEnumerator AttackDelay()
     {
-        animation.Attack();
+        anim.Attack();
         sword.enabled = true;
         yield return new WaitForSeconds(0.15f);
         sword.enabled = false;
