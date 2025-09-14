@@ -59,7 +59,6 @@ public class PlayerMovement : MonoBehaviour
         if (onGround && context.started)
         {
             jump = true;
-            anim.Jump(onGround);
         }
     }
 

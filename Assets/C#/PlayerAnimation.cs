@@ -1,19 +1,24 @@
+using System;
+using System.Collections;
 using UnityEngine;
 
 public class PlayerAnimation : MonoBehaviour
 {
-    public void Move(bool isMoving)
+    private Animator anim;
+
+    private void Start()
     {
-        
+        anim = GetComponent<Animator>();
     }
 
-    public void Jump(bool onGround)
+    public void Move(bool isMoving)
     {
-        
+       anim.SetBool("walking", isMoving);
     }
 
     public void Attack()
     {
-        
+        anim.Play("PlayerAttack");
     }
+    
 }
