@@ -12,12 +12,12 @@ public class EnemyAnimation : MonoBehaviour
     
     public void Hurt()
     {
-        anim.Play("EnemyHit");
+        //animation
     }
 
     public void Death()
     {
-        anim.Play("EnemyDie");
+        //animation 
     }
 
     public void TurnOff()
