@@ -13,12 +13,12 @@ public class PlayerAnimation : MonoBehaviour
 
     public void Move(bool isMoving)
     {
-       anim.SetBool("walking", isMoving);
+       //animation
     }
 
     public void Attack()
     {
-        anim.Play("PlayerAttack");
+        //animation
     }
     
 }
